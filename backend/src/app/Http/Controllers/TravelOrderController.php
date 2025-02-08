@@ -113,6 +113,13 @@ class TravelOrderController extends Controller
      * )
      */
 
+     /**
+        * Lista os pedidos de viagem
+        *
+        * @param Request $request
+        * @return \Illuminate\Http\JsonResponse
+        *
+     */
     public function index(Request $request)
     {
         $status = $request->query('status');
@@ -149,6 +156,12 @@ class TravelOrderController extends Controller
         return TravelOrderCollection::collection($orders);
     }
 
+    /**
+     * Verifica se a data está no formato correto
+     *
+     * @param $date
+     * @return bool
+     * */
     private function isValidDate($date)
     {
         return preg_match('/^\d{4}-\d{2}-\d{2}$/', $date);
@@ -182,6 +195,14 @@ class TravelOrderController extends Controller
      *     ),
      *     security={{"bearerAuth":{}}}
      * )
+     */
+
+    /**
+     *
+     * Cria um novo pedido de viagem
+     *
+     * @param Request $request
+     *
      */
     public function store(Request $request)
     {
@@ -235,6 +256,16 @@ class TravelOrderController extends Controller
      *     security={{"bearerAuth":{}}}
      * )
      */
+
+    /**
+     *
+     * Mostra um pedido de viagem específico
+     *
+     * @param $id
+     *
+     * @return \Illuminate\Http\JsonResponse
+     *
+     */
     public function show($id)
     {
         // $order = TravelOrder::where('user_id', auth()->id())->findOrFail($id);
@@ -284,6 +315,15 @@ class TravelOrderController extends Controller
      *     ),
      *     security={{"bearerAuth":{}}}
      * )
+     */
+
+     /**
+        * Atualiza o status de um pedido de viagem
+        *
+        * @param Request $request
+        * @param $id
+        * @return \Illuminate\Http\JsonResponse
+        *
      */
     public function updateStatus(Request $request, $id)
     {
@@ -340,6 +380,15 @@ class TravelOrderController extends Controller
      *     security={{"bearerAuth":{}}}
      * )
      */
+
+
+     /**
+        * Cancela um pedido de viagem
+        *
+        * @param $id
+        * @return \Illuminate\Http\JsonResponse
+        *
+     */
     public function cancel($id)
     {
         // $order = TravelOrder::where('user_id', auth()->id())->findOrFail($id);
@@ -374,6 +423,12 @@ class TravelOrderController extends Controller
      *     security={{"bearerAuth":{}}}
      * )
      */
+
+    /**
+       * Lista as notificações não lidas do usuário autenticado
+       *
+       * @return \Illuminate\Http\JsonResponse
+     * */
     public function notifications()
     {
         $user = auth()->user();
@@ -382,6 +437,12 @@ class TravelOrderController extends Controller
         return response()->json($notifications);
     }
 
+    /**
+     * Marca uma notificação como lida
+     *
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     * */
     public function markNotificationAsRead($id)
     {
         $notification = auth()->user()->notifications()->findOrFail($id);
