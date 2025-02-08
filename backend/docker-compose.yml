@@ -5,8 +5,6 @@ services:
       dockerfile: Dockerfile
     container_name: laravel_app
     hostname: laravel_app
-    volumes:
-      - ./src:/var/www
     networks:
       - laravel_network
     depends_on:
@@ -16,15 +14,13 @@ services:
       - 9000
 
   nginx:
-    image: nginx:latest
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
     container_name: laravel_nginx
     hostname: laravel_nginx
     ports:
       - "8000:80"
-    volumes:
-      - ./src:/var/www
-      - ./nginx-default.conf:/etc/nginx/conf.d/default.conf
-      - ./fastcgi-php.conf:/etc/nginx/snippets/fastcgi-php.conf
     depends_on:
       - backend
     networks:
@@ -41,8 +37,6 @@ services:
       MYSQL_PASSWORD: 99bcaff6002c4e3dab901d82a62b8e7c
     ports:
       - "3306:3306"
-    volumes:
-      - db_data:/var/lib/mysql
     networks:
       - laravel_network
 

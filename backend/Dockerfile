@@ -26,7 +26,7 @@ WORKDIR /var/www
 
 COPY src/ .
 
-COPY exemplo.env /var/www/.env
+RUN cp .env.example .env
 RUN chown www-data:www-data /var/www/.env
 
 ENV COMPOSER_ALLOW_SUPERUSER=1
