@@ -25,39 +25,39 @@ O front-end depende do backend (API Laravel) para funcionar corretamente. Certif
 ## Estrutura do Projeto
 
 ```text
-.
-├── backend/
-│   ├── docker-compose.yml
-│   ├── Dockerfile
-│   ├── src/
-│   │   ├── .env.example
-│   │   ├── app/
-│   │   ├── bootstrap/
-│   │   ├── config/
-│   │   ├── database/
-│   │   ├── public/
-│   │   ├── resources/
-│   │   ├── routes/
-│   │   ├── storage/
-│   │   ├── tests/
-│   │   └── ...
-│   └── ...
-├── frontend/
-│   ├── docker-compose.yml
-│   ├── Dockerfile
-│   ├── src/
-│   │   ├── assets/
-│   │   ├── components/
-│   │   ├── views/
-│   │   ├── router/
-│   │   ├── store/
-│   │   ├── services/
-│   │   ├── App.vue
-│   │   ├── main.js
-│   │   ├── config.js
-│   │   └── ...
-│   └── ...
-└── ...
+    .
+    ├── backend/
+    │   ├── docker-compose.yml
+    │   ├── Dockerfile
+    │   ├── src/
+    │   │   ├── .env.example
+    │   │   ├── app/
+    │   │   ├── bootstrap/
+    │   │   ├── config/
+    │   │   ├── database/
+    │   │   ├── public/
+    │   │   ├── resources/
+    │   │   ├── routes/
+    │   │   ├── storage/
+    │   │   ├── tests/
+    │   │   └── ...
+    │   └── ...
+    ├── frontend/
+    │   ├── docker-compose.yml
+    │   ├── Dockerfile
+    │   ├── src/
+    │   │   ├── assets/
+    │   │   ├── components/
+    │   │   ├── views/
+    │   │   ├── router/
+    │   │   ├── store/
+    │   │   ├── services/
+    │   │   ├── App.vue
+    │   │   ├── main.js
+    │   │   ├── config.js
+    │   │   └── ...
+    │   └── ...
+    └── ...
 ```
 
 ## Como Rodar o Projeto Backend

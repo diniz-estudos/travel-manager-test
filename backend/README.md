@@ -6,19 +6,21 @@ Para rodar o projeto backend usando as configurações do Docker, siga os passos
 
 2. Criar a rede laravel_network
 
-Necessário criar a rede antes de rodar os containers:
+É necessário criar a rede manualmente para garantir que todos os containers possam se comunicar entre si usando essa rede.
 
     ```sh
     docker network create laravel_network
     ```
 
 3. **Clone o repositório do projeto e navegue até o diretório do backend:**
+
     ```sh
     git clone https://github.com/eduvyres/travel-manager-test.git
     cd backend
     ```
 
 4. **Crie um arquivo `.env` a partir do exemplo fornecido:**
+
     ```sh
     cp src/.env.example src/.env
     ```
@@ -26,11 +28,13 @@ Necessário criar a rede antes de rodar os containers:
 5. **Atualize as variáveis de ambiente no arquivo `.env` conforme necessário.**
 
 6. **Construa e inicie os containers Docker:**
+
     ```sh
     docker-compose up --build
     ```
 
 7. **Acesse o aplicativo no navegador:**
+
     Abra o navegador e vá para `http://localhost:8000`.
 
 Esses passos irão configurar e iniciar o ambiente de desenvolvimento do backend usando Docker, incluindo o servidor PHP, o servidor Nginx e o banco de dados MySQL.
