@@ -109,6 +109,8 @@ const statusOptions = ['solicitado', 'aprovado', 'cancelado']
 const user_id = localStorage.getItem('user_id') || null
 const router = useRouter()
 
+// Filtra os pedidos de acordo com os filtros
+// Desabilitado, e passado a responsabilidade do filtro para o backend
 const filteredOrders = computed(() => {
     return ordersStore.orders.filter(order => {
         const matchesStatus = !statusFilter.value || order.status === statusFilter.value
@@ -125,6 +127,7 @@ onMounted(async () => {
     loading.value = false
 })
 
+// Atualiza a lista de pedidos
 const updateOrdersList = async (page = 1) => {
     try {
         loading.value = true
@@ -157,6 +160,7 @@ const cancelOrder = async (id) => {
     }
 }
 
+// Atualiza o status do pedido
 const updateStatus = async (id, status) => {
     try {
         loading.value = true

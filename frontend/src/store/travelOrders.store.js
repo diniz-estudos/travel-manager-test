@@ -1,6 +1,11 @@
 import { defineStore } from 'pinia'
-import axios from 'axios'
-import { API_BASE_URL } from '@/config'
+import {
+    fetchOrdersServices,
+    createOrderServices,
+    updateOrderStatusServices,
+    cancelOrderServices,
+    fetchOrderByIdServices
+} from '@/services/apiService'
 
 export const useTravelOrdersStore = defineStore('travelOrders', {
     state: () => ({
@@ -16,44 +21,27 @@ export const useTravelOrdersStore = defineStore('travelOrders', {
     actions: {
         async fetchOrders(filters = {}, page = 1) {
             try {
-                const token = localStorage.getItem('token') || null
-                const response = await axios.get(`${API_BASE_URL}/api/travel-orders`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    },
-                    params: { ...filters, page }
-                })
-                this.orders = response.data.data
-                this.pagination = response.data.meta
-                this.pagination.links = response.data.meta.links
+                const response = await fetchOrdersServices(filters, page)
+                this.orders = response.data
+                this.pagination = response.meta
+                this.pagination.links = response.meta.links
             } catch (error) {
                 console.error('Erro ao buscar pedidos de viagem:', error)
             }
         },
         async createOrder(orderData) {
             try {
-                const token = localStorage.getItem('token')
-                const response = await axios.post(`${API_BASE_URL}/api/travel-orders`, orderData, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                })
-                // this.orders.push(response.data)
+                const newOrder = await createOrderServices(orderData)
             } catch (error) {
                 console.error('Erro ao criar pedido de viagem:', error)
             }
         },
         async updateOrderStatus(orderId, status) {
             try {
-                const token = localStorage.getItem('token')
-                const response = await axios.put(`${API_BASE_URL}/api/travel-orders/${orderId}/status`, { status }, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                })
+                const response = await updateOrderStatusServices(orderId, status)
                 const index = this.orders.findIndex(order => order.id === orderId)
                 if (index !== -1) {
-                    this.orders[index].status = response.data.status
+                    this.orders[index].status = response.status
                 }
             } catch (error) {
                 console.error('Erro ao atualizar status do pedido de viagem:', error)
@@ -61,15 +49,10 @@ export const useTravelOrdersStore = defineStore('travelOrders', {
         },
         async cancelOrder(orderId) {
             try {
-                const token = localStorage.getItem('token')
-                const response = await axios.delete(`${API_BASE_URL}/api/travel-orders/${orderId}/cancel`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                })
+                const response = await cancelOrderServices(orderId)
                 const index = this.orders.findIndex(order => order.id === orderId)
                 if (index !== -1) {
-                    this.orders[index].status = response.data.status
+                    this.orders[index].status = response.status
                 }
             } catch (error) {
                 console.error('Erro ao cancelar pedido de viagem:', error)
@@ -77,18 +60,12 @@ export const useTravelOrdersStore = defineStore('travelOrders', {
         },
         async fetchOrderById(id) {
             try {
-              const response = await axios.get(`${API_BASE_URL}/api/travel-orders/${id}`,
-                {
-                  headers: {
-                    Authorization: `Bearer ${localStorage.getItem('token')}`
-                  }
-                }
-              )
-              return response.data.data
+                const response = await fetchOrderByIdServices(id)
+                return response.data
             } catch (error) {
-              console.error('Erro ao buscar detalhes do pedido:', error)
-              throw error
+                console.error('Erro ao buscar detalhes do pedido:', error)
+                throw error
             }
-          }
+        }
     }
 })

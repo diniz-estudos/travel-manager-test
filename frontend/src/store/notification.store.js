@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia'
-import axios from 'axios'
-import { API_BASE_URL } from '@/config'
+import { fetchNotifications, markAsRead } from '@/services/apiService'
 
 const token = localStorage.getItem('token')
 
@@ -12,12 +11,7 @@ export const useNotificationStore = defineStore('notification', {
     actions: {
         async fetchNotifications() {
             try {
-                const response = await axios.get(`${API_BASE_URL}/api/notifications`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                })
-                this.notifications = response.data
+                this.notifications = await fetchNotifications()
                 this.unreadCount = this.notifications.length
                 return this.notifications
             }
@@ -28,11 +22,7 @@ export const useNotificationStore = defineStore('notification', {
 
         async markAsRead(id) {
             try {
-                await axios.put(`${API_BASE_URL}/api/notifications/${id}`, {}, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                })
+                await markAsRead(id)
                 const notification = this.notifications.find(n => n.id === id)
                 if (notification) {
                     notification.read_at = new Date().toISOString()

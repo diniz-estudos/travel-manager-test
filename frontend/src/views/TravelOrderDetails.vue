@@ -33,6 +33,7 @@
   const loading = ref(true)
   const order = ref(null)
 
+  // Busca os detalhes do pedido de viagem pelo ID
   const fetchOrderDetails = async () => {
     try {
       const orderId = route.params.id

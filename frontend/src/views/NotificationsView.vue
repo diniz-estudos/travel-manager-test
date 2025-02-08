@@ -40,6 +40,7 @@ const notificationStore = useNotificationStore()
 const notifications = ref([])
 const loading = ref(true)
 
+// Busca as notificações não lidas do usuário
 const fetchNotifications = async () => {
     try {
         loading.value = true
@@ -51,6 +52,7 @@ const fetchNotifications = async () => {
     }
 }
 
+// Marca a notificação como lida
 const markAsRead = async (notification) => {
     if (!notification.read_at) {
         await notificationStore.markAsRead(notification.id)
