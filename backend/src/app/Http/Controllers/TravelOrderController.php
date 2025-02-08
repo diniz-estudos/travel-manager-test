@@ -305,8 +305,6 @@ class TravelOrderController extends Controller
 
         $userNotifiable = $order->user;
 
-        $userNotifiable->notify(new TravelOrderStatusUpdated($order));
-
         return new TravelOrderCollection($order);
     }
 
@@ -352,8 +350,6 @@ class TravelOrderController extends Controller
         }
 
         $order->update(['status' => 'cancelado']);
-
-        $order->user->notify(new TravelOrderStatusUpdated($order));
 
         return new TravelOrderCollection($order);
     }
