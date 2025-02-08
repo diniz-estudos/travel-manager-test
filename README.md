@@ -89,6 +89,14 @@ Isso irá subir:
    - Container do MySQL (banco de dados).
    - Container do Nginx (servidor web).
 
+### Executanto Migrante
+
+Necessário executar um migrate na primeira instalação
+
+```bash
+docker exec laravel_app php artisan migrate
+```
+
 ### Acesse o aplicativo no navegador
 
 Abra o navegador e vá para http://localhost:8000/docs
