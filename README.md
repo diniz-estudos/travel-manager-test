@@ -71,11 +71,10 @@ cd travel-manager-test/backend
 
 ### Crie um arquivo .env a partir do exemplo fornecido:
 
-```bash
-cp src/.env.example src/.env
-```
+**Importante** : Atualize as variáveis de ambiente no arquivo .env.exemplo conforme necessário.
 
-**Importante** : Atualize as variáveis de ambiente no arquivo .env conforme necessário.
+O arquivo .env.example será copiado para o .env, portanto configure este arquivo conforme necessidade
+
 
 ### Construa e inicie os containers Docker
 
@@ -85,9 +84,9 @@ docker-compose up --build
 
 Isso irá subir:
 
-   - Container do Laravel (API).
-   - Container do MySQL (banco de dados).
-   - Container do Nginx (servidor web).
+   - Container do Laravel (API) - laravel_app.
+   - Container do MySQL (banco de dados) laravel_db.
+   - Container do Nginx (servidor web) laravel_nginx.
 
 ### Executanto Migrante
 
@@ -100,7 +99,6 @@ docker exec laravel_app php artisan migrate
 ### Acesse o aplicativo no navegador
 
 Abra o navegador e vá para http://localhost:8000/docs
-
 
 ## Como Rodar o Projeto Front-end
 
@@ -188,7 +186,6 @@ npm run test
 - Certifique-se de que o backend esteja rodando antes de iniciar o front-end.
 - O front-end e o backend devem estar conectados à mesma rede Docker (laravel_network).
 - Consulte os arquivos docker-compose.yml e Dockerfile para mais detalhes sobre a configuração dos containers Docker.
-
 
 ## Resumo das Etapas para Rodar o Projeto Completo
 1. Crie a rede laravel_network no docker:
