@@ -12,7 +12,7 @@ Antes de começar, certifique-se de que você tenha os seguintes itens instalado
 
 ## Criar a rede laravel_network
 
-Necessário criar a rede manualmente antes de rodar os containers:
+É necessário criar a rede manualmente para garantir que todos os containers possam se comunicar entre si usando essa rede.
 
 ```sh
 docker network create laravel_network
