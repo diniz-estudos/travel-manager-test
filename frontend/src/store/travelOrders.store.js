@@ -32,6 +32,7 @@ export const useTravelOrdersStore = defineStore('travelOrders', {
         async createOrder(orderData) {
             try {
                 const newOrder = await createOrderServices(orderData)
+                return newOrder.data
             } catch (error) {
                 console.error('Erro ao criar pedido de viagem:', error)
             }

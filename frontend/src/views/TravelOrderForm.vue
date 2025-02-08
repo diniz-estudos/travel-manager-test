@@ -30,6 +30,7 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { useTravelOrdersStore } from '@/store/travelOrders.store'
 import toastr from 'toastr'
 
@@ -42,13 +43,15 @@ const form = ref({
 
 const ordersStore = useTravelOrdersStore()
 const loading = ref(false)
+const router = useRouter()
 
 const submitForm = async () => {
     try {
         loading.value = true
-        await ordersStore.createOrder(form.value)
+        const newOrder = await ordersStore.createOrder(form.value)
         form.value = {}
         toastr.success('Pedido de viagem criado com sucesso!', 'Sucesso')
+        router.push({ name: 'TravelOrderDetails', params: { id: newOrder.id } })
     } catch (error) {
         toastr.error('Ocorreu um erro ao criar o pedido. Tente novamente!', 'Erro')
     } finally {
