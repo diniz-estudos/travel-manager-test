@@ -73,10 +73,12 @@
 
 <script setup>
 import { useAuthStore } from '@/store/auth.store'
-import { computed, ref, onMounted } from 'vue'
+import { computed, ref, onMounted, onUnmounted} from 'vue'
 import { useNotificationStore } from '@/store/notification.store'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
 import { formatDate } from '@/utils/dateUtils'
+
+let intervalId
 
 const authStore = useAuthStore()
 const isAuthenticated = computed(() => authStore.isAuthenticated)
@@ -84,7 +86,7 @@ const user_name = computed(() => authStore.user_name)
 const notificationStore = useNotificationStore()
 const notifications = ref([])
 const loading = ref(false)
-const unreadCount = computed(() => notifications.value.filter(n => !n.read_at).length)
+const unreadCount = ref(0)
 
 const logout = async () => {
     await authStore.logout()
@@ -94,22 +96,33 @@ const fetchNotifications = async () => {
     try {
         loading.value = true
         notifications.value = await notificationStore.fetchNotifications()
+        updateUnreadCount()
     } finally {
         loading.value = false
     }
+}
+
+const updateUnreadCount = () => {
+    unreadCount.value = notifications.value.filter(n => !n.read_at).length
 }
 
 const markAsRead = async (notification) => {
     if (!notification.read_at) {
         await notificationStore.markAsRead(notification.id)
         notification.read_at = new Date().toISOString()
+        updateUnreadCount()
     }
 }
 
 onMounted(() => {
     if (authStore.isAuthenticated) {
         fetchNotifications()
+        intervalId = setInterval(fetchNotifications, 60000)
     }
+})
+
+onUnmounted(() => {
+    clearInterval(intervalId)
 })
 </script>
 

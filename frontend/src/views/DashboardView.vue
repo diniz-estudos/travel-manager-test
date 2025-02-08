@@ -67,21 +67,23 @@
         </table>
         <nav aria-label="Page navigation" class="d-flex justify-content-between align-items-start">
             <div class="text-center mt-2">
-                Página {{ ordersStore.pagination.current_page }} de {{ ordersStore.pagination.last_page }}
+                Página {{ ordersStore.pagination.current_page }} de {{ ordersStore.pagination.last_page }} ( Total de
+                registros {{ ordersStore.pagination.total }} )
             </div>
             <ul class="pagination justify-content-center">
-                <li class="page-item" :class="{ disabled: !ordersStore.pagination.links.prev }">
-                    <a class="page-link" href="#"
-                        @click.prevent="changePage(ordersStore.pagination.current_page - 1)">Anterior</a>
+                <li class="page-item" :class="{ disabled: ordersStore.pagination.current_page === 1 }">
+                    <a class="page-link" href="#" @click.prevent="changePage(ordersStore.pagination.current_page - 1)">
+                        << Anterior</a>
                 </li>
                 <li class="page-item" v-for="(link, index) in ordersStore.pagination.links" :key="index"
                     :class="{ active: link.active }" v-if="link && link.url">
                     <a class="page-link" href="#"
                         @click.prevent="changePage(new URL(link.url).searchParams.get('page'))">{{ link.label }}</a>
                 </li>
-                <li class="page-item" :class="{ disabled: !ordersStore.pagination.links.next }">
+                <li class="page-item"
+                    :class="{ disabled: ordersStore.pagination.current_page === ordersStore.pagination.last_page }">
                     <a class="page-link" href="#"
-                        @click.prevent="changePage(ordersStore.pagination.current_page + 1)">Próximo</a>
+                        @click.prevent="changePage(ordersStore.pagination.current_page + 1)">Próximo >></a>
                 </li>
             </ul>
 
@@ -106,7 +108,8 @@ const filters = ref({
 })
 
 const statusOptions = ['solicitado', 'aprovado', 'cancelado']
-const user_id = localStorage.getItem('user_id') || null
+const user_id = localStorage.getItem('user_id') ? JSON.parse(localStorage.getItem('user_id')) : null
+
 const router = useRouter()
 
 // Filtra os pedidos de acordo com os filtros
