@@ -4,7 +4,7 @@ Este repositório contém uma aplicação de gerenciamento de pedidos de viagem,
 
 ## Pré-requisitos
 
-Antes de começar, certifique-se de que você tenha os seguintes itens instalados em sua máquina:
+Antes de começar, certifique-se que tenha internet e de que você tenha os seguintes itens instalados em sua máquina:
 
 - [Docker](https://docs.docker.com/get-docker/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
@@ -199,14 +199,18 @@ docker network create laravel_network
 2. Suba o backend:
 Navegue até backend e execute docker-compose up --build. Verifique se a API está acessível em http://localhost:8000/docs.
 
-3. Suba o front-end:
+3. Rode migrate 
+```
+docker exec laravel_app php artisan migrate
+```
+4. Suba o front-end:
 Navegue até frontend e execute:
 ```bash
 docker-compose up --build
 ```
 Acesse a aplicação em http://localhost:8080.
 
-4. Use o Sistema
+5. Use o Sistema
 
 Registre-se e faça login, crie pedidos de viagem, atualize status e explore todas as funcionalidades.
 

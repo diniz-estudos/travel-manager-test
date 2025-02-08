@@ -34,7 +34,7 @@ ENV COMPOSER_ALLOW_SUPERUSER=1
 RUN composer install
 
 RUN touch /var/log/cron.log
-RUN (crontab -l ; echo "* * * * * cd /var/www && php artisan queue:work --force --once >> /var/www/storage/logs/cron.log 2>&1") | crontab -
+RUN (crontab -l ; echo "* * * * * cd /var/www && /usr/local/bin/php artisan queue:work >> /var/www/storage/logs/cron.log 2>&1") | crontab -
 
 RUN chown -R www-data:www-data /var/www/storage
 

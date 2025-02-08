@@ -14,6 +14,9 @@
                     <i class="pi pi-calendar-plus">&nbsp;</i>
                     <span>Nova Viagem</span>
                 </router-link>
+                <router-link v-if="!isAuthenticated" to="/register" class="nav-link">
+                    Criar Conta
+                </router-link>
                 <router-link v-if="!isAuthenticated" to="/login" class="nav-link">
                     Login
                 </router-link>
@@ -51,9 +54,9 @@
                                 <span class="small">Nenhuma notificação</span>
                             </div>
                             <template v-else>
-                                <div class="dropdown-item" v-for="notification in notifications" :key="notification.id"
+                                <div class="dropdown-item dropdown-menu-notification" v-for="notification in notifications" :key="notification.id"
                                     @click="markAsRead(notification)">
-                                    <div class="d-flex justify-content-between ms-1">
+                                    <div class="d-flex justify-content-between ms-1 dropdown-menu-notification">
                                         <span>{{ notification.data.message }}</span>
                                         <small class="text-muted">{{ formatDate(notification.created_at) }}</small>
                                     </div>
@@ -136,10 +139,13 @@ onUnmounted(() => {
     padding: 0.25em 0.5em;
 }
 
+.dropdown-menu-notification {
+    min-width: 650px !important;
+}
+
 .dropdown-menu {
     max-height: 300px;
     overflow-y: auto;
-    min-width: 650px;
     white-space: normal;
     word-wrap: break-word;
 }
