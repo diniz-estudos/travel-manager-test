@@ -3,6 +3,7 @@ import { API_BASE_URL } from '@/config'
 
 const apiClient = axios.create({
     baseURL: API_BASE_URL,
+    withCredentials: true,
 })
 
 apiClient.interceptors.request.use(config => {
